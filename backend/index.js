@@ -5,6 +5,23 @@ const db = require('./db')
 const app = express()
 routes(app)
 
+app.use(
+  cors({
+    origin: [
+      'https://sonar-workshop.netlify.app/',
+      new RegExp(`.https://sonar-workshop.netlify.app/`, "i"),
+    ],
+    allowedHeaders: [
+      "Authorization",
+      "Content-Length",
+      "Content-Type",
+      "Origin",
+    ],
+    methods: ["GET", "PUT", "POST", "DELETE"],
+    credentials: true,
+  })
+);
+
 const port = process.env.PORT || 8040
 
 
