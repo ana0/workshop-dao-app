@@ -1,6 +1,7 @@
 const express = require('express')
 const routes = require('./routes')
 const db = require('./db')
+const cors = require('cors')
 
 const app = express()
 routes(app)
@@ -21,6 +22,7 @@ app.use(
     credentials: true,
   })
 );
+
 
 const port = process.env.PORT || 8040
 
