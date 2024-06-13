@@ -23,6 +23,7 @@ app.use(
   })
 );
 
+console.log(app._router.stack)
 
 const port = process.env.PORT || 8040
 
