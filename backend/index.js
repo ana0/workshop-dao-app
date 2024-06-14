@@ -4,26 +4,28 @@ const db = require('./db')
 const cors = require('cors')
 
 const app = express()
-routes(app)
 
 const frontend =  new URL("https://sonar-workshop.netlify.app");
 
-app.use(
-  cors({
-    origin: [
-      frontend.hostname,
-      new RegExp(`.${frontend.hostname}`, "i"),
-    ],
-    allowedHeaders: [
-      "Authorization",
-      "Content-Length",
-      "Content-Type",
-      "Origin",
-    ],
-    methods: ["GET", "PUT", "POST", "DELETE"],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: [
+//       frontend.hostname,
+//       new RegExp(`.${frontend.hostname}`, "i"),
+//     ],
+//     allowedHeaders: [
+//       "Authorization",
+//       "Content-Length",
+//       "Content-Type",
+//       "Origin",
+//     ],
+//     methods: ["GET", "PUT", "POST", "DELETE"],
+//     credentials: true,
+//   })
+// );
+
+app.use(cors({ origin: true }))
+routes(app)
 
 console.log(app._router.stack)
 
