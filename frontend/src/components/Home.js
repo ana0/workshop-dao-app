@@ -10,12 +10,10 @@ const Home = () => {
   const voterId = localStorage.getItem('voterID') || nanoid();
   //const [points, setPoints] = useState(0);
   localStorage.setItem('voterID', voterId);
-  console.log("points", localStorage.getItem('points'))
   const points = parseInt(localStorage.getItem('points')) || 6; 
-  if (!localStorage.getItem('points')) {
+  if (!localStorage.getItem('points') || parseInt(localStorage.getItem('points')) === NaN) {
     localStorage.setItem('points', 6);
   }
-  console.log("points", localStorage.getItem('points'))
   const [currentQuestion, setCurrentQuestion] = useState(null); 
   const [data, setData] = useState(null);
 
