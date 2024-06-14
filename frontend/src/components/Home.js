@@ -11,7 +11,7 @@ const Home = () => {
   //const [points, setPoints] = useState(0);
   localStorage.setItem('voterID', voterId);
   const points = parseInt(localStorage.getItem('points')) || 6; 
-  if (!localStorage.getItem('points') || parseInt(localStorage.getItem('points')) === NaN) {
+  if (!localStorage.getItem('points') || isNaN(parseInt(localStorage.getItem('points')))) {
     localStorage.setItem('points', 6);
   }
   const [currentQuestion, setCurrentQuestion] = useState(null); 
