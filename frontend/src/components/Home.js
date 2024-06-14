@@ -11,7 +11,7 @@ const Home = () => {
   //const [points, setPoints] = useState(0);
   localStorage.setItem('voterID', voterId);
   console.log(localStorage.getItem('points'))
-  const points = localStorage.getItem('points') || 6; 
+  const points = parseInt(localStorage.getItem('points')) || 6; 
   //localStorage.currentQuestion = null;
   const [currentQuestion, setCurrentQuestion] = useState(null); 
   const [data, setData] = useState(null);
@@ -37,7 +37,7 @@ const Home = () => {
             console.log("current question updated")
           }
         } catch (error) {
-          console.log(error)
+          console.log("error", error)
         }
       }, 3000);
     }, [currentQuestion]);

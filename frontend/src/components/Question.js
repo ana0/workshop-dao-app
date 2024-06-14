@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment, useRef } from 'react';
 import axios from 'axios';
 
 const Question = ({ question, updatePoints }) => {
-  console.log("data", question)
   const [selectedOption, setSelectedOption] = useState(null);
   const [isError, setIsError] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
@@ -28,7 +27,7 @@ const Question = ({ question, updatePoints }) => {
       localStorage.setItem('lastPoll', question[0].id);
       localStorage.setItem('voteCalcDone', false);
     } catch (error) {
-      console.error(error);
+      console.error("Error", error);
       setIsError(true);
 
     }
@@ -37,8 +36,10 @@ const Question = ({ question, updatePoints }) => {
   const wonRef = useRef(null);
 
   useEffect(() => {
+    console.log("question", question)
     if (question[0].closed) {
-      if (localStorage.getItem('lastPoll') === question[0].id && localStorage.getItem('voteCalcDone') === 'false') {
+      console.log("question", question)
+      if (parseInt(localStorage.getItem('lastPoll')) === question[0].id && localStorage.getItem('voteCalcDone') === 'false') {
         console.log("doing vote calc")
         let w;
         let reward;
@@ -58,7 +59,7 @@ const Question = ({ question, updatePoints }) => {
       }
 
     }
-  }, [setWon, question, updatePoints])
+  }, [setWon, question, updatePoints, won, wonRef])
 
   return (
     <div className="questionBody">
@@ -80,18 +81,20 @@ const Question = ({ question, updatePoints }) => {
       {hasVoted && <div>Thank you for voting!</div>}
       {question[0].closed ? (
         <Fragment>
+          {console.log("question", question)}
+          {console.log("questionfind", question.find)}
           <div>The poll is closed. Results: </div>
           <p>{`${question[0].answer}: ${question[0].votes}`}</p>
           <p>{`${question[1].answer}: ${question[1].votes}`}</p>
-          {localStorage.getItem('lastPoll') === question[0].id ? 
+          {parseInt(localStorage.getItem('lastPoll')) === question[0].id ? 
             question[0].type === "pred" ?
               <Fragment>
-                <p>You voted for {question.find((item) => item.pollItemsId === localStorage.getItem('lastVote')).answer}.</p> 
+                <p>You voted for {question.find((item) => item.pollItemsId === parseInt(localStorage.getItem('lastVote'))).answer}.</p> 
                 <p>You were part of the {parseInt(localStorage.getItem('lastVote')) === won ? "winning" : "losing"} side. You {parseInt(localStorage.getItem('lastVote')) === won ? "gain" : "lose"} {predReward} points.</p>
               </Fragment>
               :
               <Fragment>
-                <p>You picked {question.find((item) => item.pollItemsId === localStorage.getItem('lastVote')).answer}.</p> 
+                <p>You picked {question.find((item) => item.pollItemsId === parseInt(localStorage.getItem('lastVote'))).answer}.</p> 
                 <p>You were {parseInt(localStorage.getItem('lastVote')) === won ? "correct" : "incorrect"} side. You {parseInt(localStorage.getItem('lastVote')) === won ? "gain" : "lose"} {quizReward} points.</p>
               </Fragment>
             :
