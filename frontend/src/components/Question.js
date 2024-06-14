@@ -81,8 +81,6 @@ const Question = ({ question, updatePoints }) => {
       {hasVoted && <div>Thank you for voting!</div>}
       {question[0].closed ? (
         <Fragment>
-          {console.log("question", question)}
-          {console.log("questionfind", question.find)}
           <div>The poll is closed. Results: </div>
           <p>{`${question[0].answer}: ${question[0].votes}`}</p>
           <p>{`${question[1].answer}: ${question[1].votes}`}</p>
