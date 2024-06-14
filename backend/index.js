@@ -6,11 +6,13 @@ const cors = require('cors')
 const app = express()
 routes(app)
 
+const frontend =  new URL("https://sonar-workshop.netlify.app");
+
 app.use(
   cors({
     origin: [
-      'https://sonar-workshop.netlify.app/',
-      new RegExp(`.https://sonar-workshop.netlify.app/`, "i"),
+      frontend.hostname,
+      new RegExp(`.${frontend.hostname}`, "i"),
     ],
     allowedHeaders: [
       "Authorization",
