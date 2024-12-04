@@ -9,8 +9,9 @@ const Question = ({ question, updatePoints }) => {
   const quizReward = 2;
   const predReward = 3;
 
+  console.log("question", question)
+
   const handleOptionChange = (event) => {
-    console.log("event", event.target.value)
     setSelectedOption(parseInt(event.target.value));
   };
 
@@ -23,9 +24,8 @@ const Question = ({ question, updatePoints }) => {
         sessionId: localStorage.getItem('voterID'),
       })
       setHasVoted(true)
-      localStorage.setItem('lastVote', selectedOption);
       localStorage.setItem('lastPoll', question[0].id);
-      localStorage.setItem('voteCalcDone', false);
+      localStorage.setItem('lastVote', selectedOption)
     } catch (error) {
       console.error("Error", error);
       setIsError(true);
@@ -36,11 +36,13 @@ const Question = ({ question, updatePoints }) => {
   const wonRef = useRef(null);
 
   useEffect(() => {
+    setHasVoted(false);
+  }, [question[0].id])
+
+  useEffect(() => {
     console.log("question", question)
     if (question[0].closed) {
-      console.log("question", question)
       if (parseInt(localStorage.getItem('lastPoll')) === question[0].id && localStorage.getItem('voteCalcDone') === 'false') {
-        console.log("doing vote calc")
         let w;
         let reward;
         if (question[0].type === "pred") {
@@ -52,9 +54,8 @@ const Question = ({ question, updatePoints }) => {
         }
         wonRef.won = w;
         setWon(w);
-        console.log("won", wonRef.won)
-        console.log("selectedOption", parseInt(localStorage.getItem('lastVote')))
         localStorage.setItem('voteCalcDone', true);
+        //setHasVoted(false)
         updatePoints(parseInt(localStorage.getItem('points')) + (parseInt(localStorage.getItem('lastVote')) === wonRef.won ? reward : -reward));
       }
 

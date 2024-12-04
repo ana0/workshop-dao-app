@@ -30,12 +30,14 @@ const Home = () => {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_URL}polls/top`);
           setData(response.data);
+          console.log("response full", response.data)
           if (response.data.poll[0].id !== currentQuestionRef.current) {
             console.log("current", currentQuestion)
             console.log("response", response.data.poll[0].id)
             currentQuestionRef.current = response.data.poll[0].id;
             setCurrentQuestion(response.data.poll[0].id)
-            //localStorage.setItem('voteCalcDone', false);
+
+            localStorage.setItem('voteCalcDone', false);
             console.log("current question updated")
           }
         } catch (error) {
