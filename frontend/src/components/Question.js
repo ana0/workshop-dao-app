@@ -10,6 +10,7 @@ const Question = ({ question, updatePoints }) => {
   const predReward = 3;
 
   console.log("question", question)
+  const questionId = question[0].id;
 
   const handleOptionChange = (event) => {
     setSelectedOption(parseInt(event.target.value));
@@ -37,7 +38,7 @@ const Question = ({ question, updatePoints }) => {
 
   useEffect(() => {
     setHasVoted(false);
-  }, [question[0].id])
+  }, [questionId])
 
   useEffect(() => {
     console.log("question", question)
